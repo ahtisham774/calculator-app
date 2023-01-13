@@ -15,4 +15,5 @@ npm run dev
 
 # start using host
 npm run dev -- --host
+
 by using this you can run it on all other devices connected to the same network
