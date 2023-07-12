@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+
 import './App.css'
 import Button from './components/button'
 
@@ -37,7 +38,7 @@ function App() {
 
         }
         function removeActive(n) {
-            console.log('n', n)
+           
             if (n === '+') {
 
                 document.getElementsByClassName('equal').item(0).classList.remove('active')
@@ -46,7 +47,7 @@ function App() {
                 numbers.map((number, index) => {
                     document.getElementsByClassName(classes[index]).item(0).classList.remove('active')
                 })
-                
+
 
             }
             else if (n === 'Enter') {
@@ -77,8 +78,8 @@ function App() {
                 })
 
             }
-            else{
-               
+            else {
+
                 document.getElementsByClassName('equal').item(0).classList.remove('active')
                 document.getElementsByClassName('clear').item(0).classList.remove('active')
                 document.getElementsByClassName('plus').item(0).classList.remove('active')
@@ -89,8 +90,8 @@ function App() {
                     }
                 }
             }
-            
-           
+
+
         }
         function addActive(n) {
             if (n === '+') {
@@ -103,7 +104,7 @@ function App() {
                 document.getElementsByClassName('clear').item(0).classList.add('active')
             }
             else if (n === 'Backspace') {
-                console.log('hi i am in backspace')
+               
                 document.getElementsByClassName('backspace').item(0).classList.add('active')
             }
             else {
@@ -113,11 +114,11 @@ function App() {
             removeActive(n)
         }
         const handleKeyPress = (e) => {
-            console.log('e.key', e.key)
-            
+           
+
             if (e.key === 'Backspace') {
                 addActive(e.key)
-                console.log(count.length)
+               
                 if (count.length === 1 || count.length === undefined) {
                     setCount('0')
                 }
@@ -127,11 +128,11 @@ function App() {
 
             }
             if (isEnter(e.key) && count.length > 0) {
-                // console.log('Enter',eval(count))
                 addActive(e.key)
                 try {
 
-                    setCount(''+eval(count))
+                    setCount('' + eval(count))
+                    console.log('Enter',eval(count))
 
                 } catch (error) {
                     alert('Invalid Expression')
@@ -147,9 +148,10 @@ function App() {
                 addActive(e.key)
 
                 if (count === '0' && count.length === 1) {
-                    console.log('default')
+                    
                     setCount(e.key)
                 } else {
+                   
                     setCount(count + e.key)
                 }
             }
@@ -164,18 +166,18 @@ function App() {
 
 
     }, [count])
-useEffect(() => {
-    document.addEventListener('mouseover',()=>{
-        if(document.getElementsByClassName('active').item(0)){
-            document.getElementsByClassName('active').item(0).classList.remove('active')
-        }
-       
-    } )
-})
+    useEffect(() => {
+        document.addEventListener('mouseover', () => {
+            if (document.getElementsByClassName('active').item(0)) {
+                document.getElementsByClassName('active').item(0).classList.remove('active')
+            }
+
+        })
+    })
     const handleCalculate = () => {
         try {
 
-            setCount(''+eval(count))
+            setCount('' + eval(count))
 
         } catch (error) {
             alert('Invalid Expression')
@@ -204,22 +206,24 @@ useEffect(() => {
         setCount('0')
     }
     return (
-        <div className="app">
-            <div className='output'>
-                <span >{count}</span>
-            </div>
-            <div className='buttons'>
-                {
-                    numbers.map((number, index) => {
-                        return <Button key={index} className={classes[index]} handleAdd={handleAdd} text={number} />
-                    })
-                }
-                <button onClick={() => setCount(count + '+')} className='plus'>+</button>
-                <button onClick={handleClear} className='clear'>C</button>
-                <button onClick={handleBack} className='backspace'>⌫</button>
-                <button onClick={handleCalculate} className='equal'>=</button>
-            </div>
+        <div className='container'>
+            <div className="app">
+                <div className='output'>
+                  <input type="text" value={count}/>
+                </div>
+                <div className='buttons'>
+                    {
+                        numbers.map((number, index) => {
+                            return <Button key={index} className={classes[index]} handleAdd={handleAdd} text={number} />
+                        })
+                    }
+                    <button onClick={() => setCount(count + '+')} className='plus'>+</button>
+                    <button onClick={handleClear} className='clear'>C</button>
+                    <button onClick={handleBack} className='backspace'>⌫</button>
+                    <button onClick={handleCalculate} className='equal'>=</button>
+                </div>
 
+            </div>
         </div>
     )
 }
